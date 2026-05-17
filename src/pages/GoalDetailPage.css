@@ -1,0 +1,361 @@
+.goal-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.goal-detail-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* 概览卡片 */
+.goal-overview {
+  margin-bottom: 24px;
+}
+
+.overview-header {
+  margin-bottom: 20px;
+}
+
+.overview-info .status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}
+
+.goal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 8px 0;
+}
+
+.goal-desc {
+  font-size: 15px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366F1;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-progress {
+  margin-top: 6px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+/* 详情区域 */
+.detail-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.page-info {
+  font-size: 13px;
+  color: #64748B;
+}
+
+/* 每日记录 */
+.log-form {
+  margin-bottom: 20px;
+}
+
+.log-form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.log-form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.log-form-field label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.log-form-field input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.log-form-field input[type="range"] {
+  width: 100%;
+}
+
+.log-form-field textarea {
+  padding: 10px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.log-form-field textarea:focus,
+.log-form-field input:focus {
+  outline: none;
+  border-color: #6366F1;
+}
+
+.log-form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.empty-logs {
+  text-align: center;
+  padding: 40px 20px;
+  background: #F8FAFC;
+  border-radius: 10px;
+  color: #64748B;
+}
+
+/* 日志时间线 */
+.logs-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-item {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.log-item:hover {
+  border-color: #CBD5E1;
+}
+
+.log-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.log-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.log-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+}
+
+.log-progress-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6366F1;
+  min-width: 36px;
+  text-align: right;
+}
+
+.log-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.log-field {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.log-label {
+  color: #64748B;
+  font-weight: 500;
+  min-width: 42px;
+}
+
+.log-value {
+  color: #1E293B;
+}
+
+.log-delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.log-item:hover .log-delete {
+  opacity: 1;
+}
+
+.log-delete:hover {
+  color: #DC2626;
+}
+
+/* 热力图 */
+.heatmap-card {
+  margin-bottom: 24px;
+}
+
+.heatmap-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.heatmap-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.heatmap-range {
+  font-size: 12px;
+  color: #64748B;
+}
+
+/* 里程碑 */
+.milestones-card {
+  padding: 16px;
+}
+
+/* 激励语录 */
+.quotes-card {
+  margin-bottom: 24px;
+}
+
+.quotes-card .section-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quotes-card .section-header h2 svg {
+  color: #6366F1;
+}
+
+@media (max-width: 1024px) {
+  .overview-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .detail-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .section-milestones {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .goal-detail-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .goal-detail-actions {
+    justify-content: flex-end;
+  }
+
+  .log-form-row {
+    flex-direction: column;
+  }
+}

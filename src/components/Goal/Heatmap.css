@@ -1,0 +1,73 @@
+.heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  padding-bottom: 8px;
+  width: 100%;
+}
+
+.heatmap-months {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding-left: 2px;
+  min-height: 20px;
+}
+
+.heatmap-month {
+  font-size: 12px;
+  color: #64748B;
+  white-space: nowrap;
+}
+
+.heatmap-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 4px;
+  width: 100%;
+}
+
+.heatmap-grid {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+}
+
+.heatmap-day {
+  border-radius: 4px;
+  background: #E2E8F0;
+  flex-shrink: 0;
+}
+
+.heatmap-day.has-log {
+  background: #6366F1;
+}
+
+.heatmap-day.padding {
+  background: transparent;
+}
+
+.heatmap-day.today {
+  outline: 2px solid #6366F1;
+  outline-offset: 1px;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.legend-label {
+  font-size: 11px;
+  color: #94A3B8;
+}

@@ -1,0 +1,157 @@
+.daily-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.daily-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.daily-log-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.daily-log-add {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: #F8FAFC;
+  border-radius: 8px;
+}
+
+.daily-log-add-row {
+  display: flex;
+  gap: 16px;
+}
+
+.daily-log-add-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-log-add-field label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.daily-log-input {
+  padding: 8px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.daily-log-input:focus {
+  outline: none;
+  border-color: #6366F1;
+}
+
+.daily-log-textarea {
+  padding: 10px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.daily-log-textarea:focus {
+  outline: none;
+  border-color: #6366F1;
+}
+
+.daily-log-add-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.daily-log-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.daily-log-empty {
+  font-size: 13px;
+  color: #94A3B8;
+  text-align: center;
+  padding: 16px;
+  margin: 0;
+}
+
+.daily-log-item {
+  position: relative;
+  padding: 16px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding-right: 36px;
+}
+
+.daily-log-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.daily-log-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.daily-log-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.daily-log-field {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.daily-log-label {
+  color: #64748B;
+  font-weight: 500;
+  min-width: 42px;
+}
+
+.daily-log-value {
+  color: #1E293B;
+}
+
+.daily-log-delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #94A3B8;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.daily-log-item:hover .daily-log-delete {
+  opacity: 1;
+}
+
+.daily-log-delete:hover {
+  color: #DC2626;
+}

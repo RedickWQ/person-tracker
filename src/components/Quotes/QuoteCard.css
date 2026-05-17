@@ -1,0 +1,46 @@
+.quote-card {
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 50%, #A5B4FC 100%);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.quote-card--dashboard {
+  margin-bottom: 24px;
+}
+
+.quote-card--detail {
+  margin-top: 16px;
+  padding: 16px 20px;
+}
+
+.quote-icon {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 2px;
+}
+
+.quote-text {
+  margin: 0;
+  font-size: 15px;
+  font-style: italic;
+  color: #FFFFFF;
+  line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.quote-card--detail .quote-text {
+  font-size: 14px;
+}
+
+.quote-author {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.85);
+}

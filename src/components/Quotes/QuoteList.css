@@ -1,0 +1,154 @@
+.quote-list {
+  margin-top: 16px;
+}
+
+.quote-list-empty {
+  margin-top: 16px;
+  padding: 16px;
+  background: #F8FAFC;
+  border-radius: 8px;
+}
+
+.quote-list-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.quote-list-input-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #FFFFFF;
+}
+
+.quote-list-input-row input:focus {
+  outline: none;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.quote-add-btn {
+  padding: 8px 12px;
+  background: #6366F1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.quote-add-btn:hover:not(:disabled) {
+  background: #5558E3;
+}
+
+.quote-add-btn:disabled {
+  background: #CBD5E1;
+  cursor: not-allowed;
+}
+
+.quote-list-hint {
+  margin: 0;
+  font-size: 13px;
+  color: #94A3B8;
+}
+
+.quote-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quote-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.quote-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  font-size: 14px;
+}
+
+.quote-sparkle {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.quote-item-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0.7;
+}
+
+.quote-action-btn {
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.quote-action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.quote-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.quote-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.quote-edit-row input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1E293B;
+}
+
+.quote-edit-row input:focus {
+  outline: none;
+  border-color: white;
+}
+
+.quote-edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.quote-edit-actions .quote-action-btn {
+  padding: 4px 8px;
+}
+
+.quote-edit-actions .quote-action-btn.save {
+  color: #22C55E;
+}
+
+.quote-edit-actions .quote-action-btn.cancel {
+  color: #EF4444;
+}

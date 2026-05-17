@@ -1,0 +1,128 @@
+.quote-editor-modal {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.quote-editor-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 16px;
+}
+
+.quote-input-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.quote-input-row textarea {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: none;
+  font-family: inherit;
+}
+
+.quote-input-row textarea:focus {
+  outline: none;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.quote-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-quotes {
+  text-align: center;
+  color: #94A3B8;
+  padding: 24px;
+}
+
+.quote-item {
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.quote-content {
+  margin: 0;
+  font-size: 14px;
+  color: #1E293B;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.quote-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.quote-action-btn {
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: #94A3B8;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.quote-action-btn:hover {
+  background: #E2E8F0;
+  color: #64748B;
+}
+
+.quote-action-btn.danger:hover {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+.quote-edit-row {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quote-edit-row textarea {
+  padding: 8px;
+  border: 1px solid #6366F1;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: none;
+  font-family: inherit;
+}
+
+.quote-edit-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
