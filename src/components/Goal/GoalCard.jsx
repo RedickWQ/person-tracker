@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../Common/Card';
 import { ProgressBar } from '../Common/ProgressBar';
-import { GoalStatus } from '../../db';
+import { GoalStatus } from '../../constants';
 import { Clock, Flag } from 'lucide-react';
 import './GoalCard.css';
 

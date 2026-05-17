@@ -8,11 +8,12 @@ import { ProgressBar } from '../components/Common/ProgressBar';
 import { StatsCards } from '../components/Dashboard/StatsCards';
 import { GlobalHeatmap } from '../components/Dashboard/GlobalHeatmap';
 import { useGoals } from '../hooks/useGoals';
-import { db } from '../db';
-import { GoalStatus } from '../db';
+import { GoalStatus } from '../constants';
 import { Plus, Target, Clock, CheckCircle2, TrendingUp, Calendar } from 'lucide-react';
 import { formatDate, getTodayStr, calculateCurrentStreak, calculateLongestStreak, startOfWeek, startOfMonth } from '../utils/dateUtils';
 import './Dashboard.css';
+
+const API_BASE = '/api';
 
 const statusConfig = {
   [GoalStatus.NOT_STARTED]: { label: '未开始', color: '#94A3B8' },
@@ -39,46 +40,57 @@ export function Dashboard() {
     async function loadGoalStats() {
       const stats = {};
       for (const goal of goals) {
-        const logs = await db.dailyLogs.where('goalId').equals(goal.id).toArray();
-        stats[goal.id] = {
-          logs: logs.length,
-          lastLogDate: logs.length > 0 ? logs[logs.length - 1].date : null
-        };
+        try {
+          const res = await fetch(`${API_BASE}/goals/${goal.id}/logs`);
+          const logs = await res.json();
+          stats[goal.id] = {
+            logs: logs.length,
+            lastLogDate: logs.length > 0 ? logs[logs.length - 1].date : null
+          };
+        } catch (error) {
+          console.error('Failed to fetch logs for goal', goal.id, error);
+          stats[goal.id] = { logs: 0, lastLogDate: null };
+        }
       }
       setGoalStats(stats);
     }
 
     async function loadAllLogs() {
-      const logs = await db.dailyLogs.toArray();
-      setAllLogs(logs);
+      try {
+        const res = await fetch(`${API_BASE}/all-logs`);
+        const logs = await res.json();
+        setAllLogs(logs);
 
-      // Calculate dashboard stats
-      const uniqueDates = [...new Set(logs.map(log => log.date))];
-      const currentStreak = calculateCurrentStreak(uniqueDates);
-      const longestStreak = calculateLongestStreak(uniqueDates);
+        // Calculate dashboard stats
+        const uniqueDates = [...new Set(logs.map(log => log.date))];
+        const currentStreak = calculateCurrentStreak(uniqueDates);
+        const longestStreak = calculateLongestStreak(uniqueDates);
 
-      const today = new Date();
-      const weekStart = startOfWeek(today);
-      const monthStart = startOfMonth(today);
+        const today = new Date();
+        const weekStart = startOfWeek(today);
+        const monthStart = startOfMonth(today);
 
-      const weekLogs = logs.filter(log => new Date(log.date) >= weekStart).length;
-      const monthLogs = logs.filter(log => new Date(log.date) >= monthStart).length;
+        const weekLogs = logs.filter(log => new Date(log.date) >= weekStart).length;
+        const monthLogs = logs.filter(log => new Date(log.date) >= monthStart).length;
 
-      // Calculate completion rate
-      let completionRate = 0;
-      if (uniqueDates.length > 0) {
-        const firstDate = new Date(uniqueDates.sort()[0]);
-        const totalDays = Math.ceil((today - firstDate) / (1000 * 60 * 60 * 24)) + 1;
-        completionRate = Math.round((uniqueDates.length / totalDays) * 100);
+        // Calculate completion rate
+        let completionRate = 0;
+        if (uniqueDates.length > 0) {
+          const firstDate = new Date(uniqueDates.sort()[0]);
+          const totalDays = Math.ceil((today - firstDate) / (1000 * 60 * 60 * 24)) + 1;
+          completionRate = Math.round((uniqueDates.length / totalDays) * 100);
+        }
+
+        setDashboardStats({
+          currentStreak,
+          longestStreak,
+          weekLogs,
+          monthLogs,
+          completionRate: Math.min(100, completionRate)
+        });
+      } catch (error) {
+        console.error('Failed to fetch all logs:', error);
       }
-
-      setDashboardStats({
-        currentStreak,
-        longestStreak,
-        weekLogs,
-        monthLogs,
-        completionRate: Math.min(100, completionRate)
-      });
     }
 
     if (goals.length > 0) {

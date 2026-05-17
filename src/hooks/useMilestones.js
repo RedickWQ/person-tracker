@@ -1,38 +1,63 @@
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../db';
-import { getNowStr } from '../utils/dateUtils';
+import { useState, useEffect } from 'react';
+
+const API_BASE = '/api';
 
 export function useMilestones(goalId) {
   const validGoalId = typeof goalId === 'number' && !isNaN(goalId) ? goalId : null;
+  const [milestones, setMilestones] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const milestones = useLiveQuery(
-    async () => {
-      if (validGoalId === null) return [];
-      return db.milestones
-        .where('goalId')
-        .equals(validGoalId)
-        .toArray();
-    },
-    [validGoalId]
-  );
+  useEffect(() => {
+    if (validGoalId !== null) {
+      fetchMilestones();
+    } else {
+      setMilestones([]);
+      setLoading(false);
+    }
+  }, [validGoalId]);
+
+  async function fetchMilestones() {
+    try {
+      const res = await fetch(`${API_BASE}/goals/${validGoalId}/milestones`);
+      const data = await res.json();
+      setMilestones(data);
+    } catch (error) {
+      console.error('Failed to fetch milestones:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function addMilestone(milestone) {
     if (validGoalId === null) return;
-    await db.milestones.add({
-      ...milestone,
-      goalId: validGoalId,
-      completed: false,
-      createdAt: getNowStr()
+    const res = await fetch(`${API_BASE}/goals/${validGoalId}/milestones`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...milestone,
+        completed: false,
+        createdAt: new Date().toISOString()
+      })
     });
+    const newMilestone = await res.json();
+    setMilestones(prev => [...prev, newMilestone]);
+    return newMilestone;
   }
 
   async function toggleMilestone(id, completed) {
-    await db.milestones.update(id, { completed });
+    const res = await fetch(`${API_BASE}/milestones/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed })
+    });
+    const updatedMilestone = await res.json();
+    setMilestones(prev => prev.map(m => m.id === id ? updatedMilestone : m));
   }
 
   async function deleteMilestone(id) {
-    await db.milestones.delete(id);
+    await fetch(`${API_BASE}/milestones/${id}`, { method: 'DELETE' });
+    setMilestones(prev => prev.filter(m => m.id !== id));
   }
 
-  return { milestones: milestones || [], loading: false, addMilestone, toggleMilestone, deleteMilestone };
+  return { milestones, loading, addMilestone, toggleMilestone, deleteMilestone };
 }

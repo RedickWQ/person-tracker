@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from '../Common/Modal';
 import { Button } from '../Common/Button';
-import { GoalStatus } from '../../db';
+import { GoalStatus } from '../../constants';
 import { getTodayStr } from '../../utils/dateUtils';
 import './GoalForm.css';
 

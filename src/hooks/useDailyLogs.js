@@ -1,38 +1,57 @@
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../db';
-import { getNowStr, getTodayStr } from '../utils/dateUtils';
+import { useState, useEffect } from 'react';
+
+const API_BASE = '/api';
+
+function getTodayStr() {
+  return new Date().toISOString().split('T')[0];
+}
 
 export function useDailyLogs(goalId) {
   const validGoalId = typeof goalId === 'number' && !isNaN(goalId) ? goalId : null;
+  const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const logs = useLiveQuery(
-    async () => {
-      if (validGoalId === null) return [];
-      return db.dailyLogs
-        .where('goalId')
-        .equals(validGoalId)
-        .sortBy('date');
-    },
-    [validGoalId]
-  );
+  useEffect(() => {
+    if (validGoalId !== null) {
+      fetchLogs();
+    } else {
+      setLogs([]);
+      setLoading(false);
+    }
+  }, [validGoalId]);
+
+  async function fetchLogs() {
+    try {
+      const res = await fetch(`${API_BASE}/goals/${validGoalId}/logs`);
+      const data = await res.json();
+      setLogs(data);
+    } catch (error) {
+      console.error('Failed to fetch logs:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function addLog(log) {
     if (validGoalId === null) return;
-    await db.dailyLogs.add({
-      ...log,
-      goalId: validGoalId,
-      date: log.date || getTodayStr(),
-      createdAt: getNowStr()
+    const res = await fetch(`${API_BASE}/goals/${validGoalId}/logs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...log,
+        date: log.date || getTodayStr(),
+        createdAt: new Date().toISOString()
+      })
     });
-  }
-
-  async function updateLog(id, updates) {
-    await db.dailyLogs.update(id, updates);
+    const newLog = await res.json();
+    setLogs(prev => [newLog, ...prev]);
+    return newLog;
   }
 
   async function deleteLog(id) {
-    await db.dailyLogs.delete(id);
+    await fetch(`${API_BASE}/logs/${id}`, { method: 'DELETE' });
+    setLogs(prev => prev.filter(l => l.id !== id));
   }
 
-  return { logs: logs || [], loading: false, addLog, updateLog, deleteLog };
+  return { logs, loading, addLog, deleteLog };
 }

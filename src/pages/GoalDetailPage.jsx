@@ -12,7 +12,7 @@ import { useGoals } from '../hooks/useGoals';
 import { useMilestones } from '../hooks/useMilestones';
 import { useDailyLogs } from '../hooks/useDailyLogs';
 import { useQuotes } from '../hooks/useQuotes';
-import { GoalStatus } from '../db';
+import { GoalStatus } from '../constants';
 import { ArrowLeft, Trash2, Calendar, TrendingUp, CheckCircle2, Sparkles } from 'lucide-react';
 import { formatDate } from '../utils/dateUtils';
 import './GoalDetailPage.css';

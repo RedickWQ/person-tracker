@@ -5,7 +5,7 @@ import { GoalCard } from '../components/Goal/GoalCard';
 import { GoalForm } from '../components/Goal/GoalForm';
 import { Button } from '../components/Common/Button';
 import { useGoals } from '../hooks/useGoals';
-import { GoalStatus } from '../db';
+import { GoalStatus } from '../constants';
 import { Plus } from 'lucide-react';
 import './Dashboard.css';
 
