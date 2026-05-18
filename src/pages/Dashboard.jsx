@@ -15,6 +15,8 @@ import './Dashboard.css';
 
 const API_BASE = '/api';
 
+// CI/CD Test - Auto Deploy Test
+
 const statusConfig = {
   [GoalStatus.NOT_STARTED]: { label: '未开始', color: '#94A3B8' },
   [GoalStatus.IN_PROGRESS]: { label: '进行中', color: '#6366F1' },
