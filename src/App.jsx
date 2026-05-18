@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { GoalDetailPage } from './pages/GoalDetailPage';
+import { GoalsPage } from './pages/GoalsPage';
 import './App.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/goals" element={<GoalsPage />} />
           <Route path="/goals/:id" element={<GoalDetailPage />} />
         </Routes>
       </main>
