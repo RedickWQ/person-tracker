@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Layout/Header';
 import { Card } from '../components/Common/Card';
 import { Button } from '../components/Common/Button';
@@ -245,12 +246,12 @@ export function GoalDetailPage() {
                       <div className="log-item-content">
                         <div className="log-field">
                           <span className="log-label">完结事项：</span>
-                          <span className="log-value">{log.completedItems}</span>
+                          <span className="log-value markdown-content"><ReactMarkdown>{log.completedItems}</ReactMarkdown></span>
                         </div>
                         {log.output && (
                           <div className="log-field">
                             <span className="log-label">成果：</span>
-                            <span className="log-value">{log.output}</span>
+                            <span className="log-value markdown-content"><ReactMarkdown>{log.output}</ReactMarkdown></span>
                           </div>
                         )}
                       </div>
