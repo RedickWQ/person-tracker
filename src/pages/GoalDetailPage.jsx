@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Layout/Header';
 import { Card } from '../components/Common/Card';
@@ -38,9 +38,17 @@ export function GoalDetailPage() {
   const [completedItems, setCompletedItems] = useState('');
   const [output, setOutput] = useState('');
   const [logPage, setLogPage] = useState(1);
+  const [localProgress, setLocalProgress] = useState(null);
   const PAGE_SIZE = 5;
 
   const { quotes, addQuote, deleteQuote, updateQuote } = useQuotes(Number(id));
+
+  // 当 goal 加载完成时，初始化本地进度
+  useEffect(() => {
+    if (goal) {
+      setLocalProgress(goal.progress || 0);
+    }
+  }, [goal]);
 
   const handleDelete = async () => {
     if (window.confirm('确定要删除这个目标吗？相关的里程碑和日志也会被删除。')) {
@@ -62,6 +70,9 @@ export function GoalDetailPage() {
   };
 
   const handleProgressChange = (newProgress) => {
+    // 立即更新本地状态，UI 立刻响应
+    setLocalProgress(newProgress);
+    // 后台同步到 API
     updateGoal(Number(id), { progress: newProgress });
   };
 
@@ -164,7 +175,7 @@ export function GoalDetailPage() {
         {/* 完成进度 */}
         <Card className="goal-progress-card">
           <ProgressSlider
-            value={goal.progress || 0}
+            value={localProgress || 0}
             onChange={handleProgressChange}
           />
         </Card>
