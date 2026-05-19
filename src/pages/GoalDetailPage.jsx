@@ -248,12 +248,6 @@ export function GoalDetailPage() {
                           <span className="log-label">完结事项：</span>
                           <span className="log-value markdown-content"><ReactMarkdown>{log.completedItems}</ReactMarkdown></span>
                         </div>
-                        {log.output && (
-                          <div className="log-field">
-                            <span className="log-label">成果：</span>
-                            <span className="log-value markdown-content"><ReactMarkdown>{log.output}</ReactMarkdown></span>
-                          </div>
-                        )}
                       </div>
                       <button className="log-delete" onClick={() => deleteLog(log.id)}>
                         删除
