@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { storage } from '../storage';
 
 export function useGoal(id) {
@@ -6,7 +6,7 @@ export function useGoal(id) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const fetchGoal = useCallback(async () => {
     if (id === null || id === undefined) {
       setGoal(null);
       setLoading(false);
@@ -20,33 +20,21 @@ export function useGoal(id) {
       return;
     }
 
-    let cancelled = false;
-
-    async function fetchGoal() {
-      try {
-        setLoading(true);
-        const data = await storage.goals.get(goalId);
-        if (!cancelled) {
-          setGoal(data);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message);
-          setGoal(null);
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
+    try {
+      setLoading(true);
+      const data = await storage.goals.get(goalId);
+      setGoal(data);
+    } catch (err) {
+      setError(err.message);
+      setGoal(null);
+    } finally {
+      setLoading(false);
     }
-
-    fetchGoal();
-
-    return () => {
-      cancelled = true;
-    };
   }, [id]);
 
-  return { goal, loading, error };
+  useEffect(() => {
+    fetchGoal();
+  }, [fetchGoal]);
+
+  return { goal, loading, error, refetch: fetchGoal };
 }

@@ -29,7 +29,7 @@ export function GoalDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { updateGoal, deleteGoal } = useGoals();
-  const { goal, loading, error } = useGoal(id);
+  const { goal, loading, error, refetch } = useGoal(id);
   const { milestones, addMilestone, toggleMilestone, deleteMilestone } = useMilestones(Number(id));
   const { logs, addLog, deleteLog } = useDailyLogs(Number(id));
 
@@ -298,8 +298,9 @@ export function GoalDetailPage() {
         <GoalForm
           isOpen={showEditForm}
           onClose={() => setShowEditForm(false)}
-          onSubmit={(updates) => {
-            updateGoal(Number(id), updates);
+          onSubmit={async (updates) => {
+            await updateGoal(Number(id), updates);
+            refetch();
             setShowEditForm(false);
           }}
           initialData={goal}
