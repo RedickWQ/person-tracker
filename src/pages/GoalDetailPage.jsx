@@ -44,7 +44,7 @@ export function GoalDetailPage() {
   const handleDelete = async () => {
     if (window.confirm('确定要删除这个目标吗？相关的里程碑和日志也会被删除。')) {
       await deleteGoal(Number(id));
-      navigate('/goals');
+      navigate('/');
     }
   };
 
@@ -102,7 +102,7 @@ export function GoalDetailPage() {
       <Header title="目标详情" />
       <div className="page-content">
         <div className="goal-detail-header">
-          <Button variant="ghost" onClick={() => navigate('/goals')}>
+          <Button variant="ghost" onClick={() => navigate('/')}>
             <ArrowLeft size={18} /> 返回
           </Button>
           <div className="goal-detail-actions">
