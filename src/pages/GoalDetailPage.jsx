@@ -6,7 +6,6 @@ import { Card } from '../components/Common/Card';
 import { Button } from '../components/Common/Button';
 import { GoalForm } from '../components/Goal/GoalForm';
 import { MilestoneList } from '../components/Goal/MilestoneList';
-import { Heatmap } from '../components/Goal/Heatmap';
 import { ProgressSlider } from '../components/Goal/ProgressSlider';
 import { QuoteList } from '../components/Quotes/QuoteList';
 import { useGoals } from '../hooks/useGoals';
@@ -162,24 +161,13 @@ export function GoalDetailPage() {
           </div>
         </Card>
 
-        {/* 热力图 */}
-        {logs.length > 0 && (
-          <Card className="heatmap-card">
-            <div className="heatmap-header-row">
-              <h3 className="heatmap-title">执行情况</h3>
-              {goal.startDate && (
-                <span className="heatmap-range">
-                  {goal.startDate} ~ {goal.endDate || '至今'}
-                </span>
-              )}
-            </div>
-            <ProgressSlider
-              value={goal.progress || 0}
-              onChange={handleProgressChange}
-            />
-            <Heatmap logs={logs} startDate={goal.startDate} endDate={goal.endDate} />
-          </Card>
-        )}
+        {/* 完成进度 */}
+        <Card className="goal-progress-card">
+          <ProgressSlider
+            value={goal.progress || 0}
+            onChange={handleProgressChange}
+          />
+        </Card>
 
         {/* 激励语录 */}
         <Card className="quotes-card">
