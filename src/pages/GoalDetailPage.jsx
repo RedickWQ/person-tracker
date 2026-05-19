@@ -9,6 +9,7 @@ import { Heatmap } from '../components/Goal/Heatmap';
 import { ProgressSlider } from '../components/Goal/ProgressSlider';
 import { QuoteList } from '../components/Quotes/QuoteList';
 import { useGoals } from '../hooks/useGoals';
+import { useGoal } from '../hooks/useGoal';
 import { useMilestones } from '../hooks/useMilestones';
 import { useDailyLogs } from '../hooks/useDailyLogs';
 import { useQuotes } from '../hooks/useQuotes';
@@ -27,7 +28,8 @@ const statusConfig = {
 export function GoalDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { goals, loading, updateGoal, deleteGoal } = useGoals();
+  const { updateGoal, deleteGoal } = useGoals();
+  const { goal, loading, error } = useGoal(id);
   const { milestones, addMilestone, toggleMilestone, deleteMilestone } = useMilestones(Number(id));
   const { logs, addLog, deleteLog } = useDailyLogs(Number(id));
 
@@ -38,7 +40,6 @@ export function GoalDetailPage() {
   const [logPage, setLogPage] = useState(1);
   const PAGE_SIZE = 5;
 
-  const goal = goals.find(g => g.id === Number(id));
   const { quotes, addQuote, deleteQuote, updateQuote } = useQuotes(Number(id));
 
   const handleDelete = async () => {
@@ -82,13 +83,13 @@ export function GoalDetailPage() {
   }
 
   // 如果目标不存在，显示提示
-  if (!goal) {
+  if (error || !goal) {
     return (
       <div className="page">
         <Header title="目标详情" />
         <div className="page-content">
           <p>目标不存在或已被删除</p>
-          <Button onClick={() => navigate('/goals')}>返回目标列表</Button>
+          <Button onClick={() => navigate('/')}>返回仪表盘</Button>
         </div>
       </div>
     );
