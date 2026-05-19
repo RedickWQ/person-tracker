@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-const API_BASE = '/api';
+import { storage } from '../storage';
 
 export function useGoal(id) {
   const [goal, setGoal] = useState(null);
@@ -26,11 +25,7 @@ export function useGoal(id) {
     async function fetchGoal() {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/goals/${goalId}`);
-        if (!res.ok) {
-          throw new Error('Goal not found');
-        }
-        const data = await res.json();
+        const data = await storage.goals.get(goalId);
         if (!cancelled) {
           setGoal(data);
         }

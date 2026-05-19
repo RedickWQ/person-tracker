@@ -1,61 +1,46 @@
-import { useState, useEffect } from 'react';
-
-const API_BASE = '/api';
+import { useState, useEffect, useCallback } from 'react';
+import { storage } from '../storage';
 
 export function useMilestones(goalId) {
   const validGoalId = typeof goalId === 'number' && !isNaN(goalId) ? goalId : null;
   const [milestones, setMilestones] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (validGoalId !== null) {
-      fetchMilestones();
-    } else {
+  const fetchMilestones = useCallback(async () => {
+    if (validGoalId === null) {
       setMilestones([]);
       setLoading(false);
+      return;
     }
-  }, [validGoalId]);
-
-  async function fetchMilestones() {
     try {
-      const res = await fetch(`${API_BASE}/goals/${validGoalId}/milestones`);
-      const data = await res.json();
+      const data = await storage.milestones.list(validGoalId);
       setMilestones(data);
     } catch (error) {
       console.error('Failed to fetch milestones:', error);
     } finally {
       setLoading(false);
     }
-  }
+  }, [validGoalId]);
 
-  async function addMilestone(milestone) {
+  useEffect(() => {
+    fetchMilestones();
+  }, [fetchMilestones]);
+
+  async function addMilestone(data) {
     if (validGoalId === null) return;
-    const res = await fetch(`${API_BASE}/goals/${validGoalId}/milestones`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...milestone,
-        completed: false,
-        createdAt: new Date().toISOString()
-      })
-    });
-    const newMilestone = await res.json();
+    const newMilestone = await storage.milestones.create(validGoalId, data);
     setMilestones(prev => [...prev, newMilestone]);
     return newMilestone;
   }
 
   async function toggleMilestone(id, completed) {
-    const res = await fetch(`${API_BASE}/milestones/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ completed })
-    });
-    const updatedMilestone = await res.json();
-    setMilestones(prev => prev.map(m => m.id === id ? updatedMilestone : m));
+    const updated = await storage.milestones.update(id, { completed });
+    setMilestones(prev => prev.map(m => m.id === id ? updated : m));
+    return updated;
   }
 
   async function deleteMilestone(id) {
-    await fetch(`${API_BASE}/milestones/${id}`, { method: 'DELETE' });
+    await storage.milestones.delete(id);
     setMilestones(prev => prev.filter(m => m.id !== id));
   }
 

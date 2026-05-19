@@ -1,58 +1,39 @@
-import { useState, useEffect } from 'react';
-
-const API_BASE = '/api';
+import { useState, useEffect, useCallback } from 'react';
+import { storage } from '../storage';
 
 export function useGoals() {
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchGoals();
-  }, []);
-
-  async function fetchGoals() {
+  const fetchGoals = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/goals`);
-      const data = await res.json();
+      const data = await storage.goals.list();
       setGoals(data);
     } catch (error) {
       console.error('Failed to fetch goals:', error);
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchGoals();
+  }, [fetchGoals]);
 
   async function addGoal(goal) {
-    const res = await fetch(`${API_BASE}/goals`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...goal,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      })
-    });
-    const newGoal = await res.json();
+    const newGoal = await storage.goals.create(goal);
     setGoals(prev => [newGoal, ...prev]);
     return newGoal;
   }
 
   async function updateGoal(id, updates) {
-    const res = await fetch(`${API_BASE}/goals/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...updates,
-        updatedAt: new Date().toISOString()
-      })
-    });
-    const updatedGoal = await res.json();
+    const updatedGoal = await storage.goals.update(id, updates);
     setGoals(prev => prev.map(g => g.id === id ? updatedGoal : g));
     return updatedGoal;
   }
 
   async function deleteGoal(id) {
-    await fetch(`${API_BASE}/goals/${id}`, { method: 'DELETE' });
+    await storage.goals.delete(id);
     setGoals(prev => prev.filter(g => g.id !== id));
   }
 

@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-
-const API_BASE = '/api';
+import { useState, useEffect, useCallback } from 'react';
+import { storage } from '../storage';
 
 function getTodayStr() {
   return new Date().toISOString().split('T')[0];
@@ -11,45 +10,38 @@ export function useDailyLogs(goalId) {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (validGoalId !== null) {
-      fetchLogs();
-    } else {
+  const fetchLogs = useCallback(async () => {
+    if (validGoalId === null) {
       setLogs([]);
       setLoading(false);
+      return;
     }
-  }, [validGoalId]);
-
-  async function fetchLogs() {
     try {
-      const res = await fetch(`${API_BASE}/goals/${validGoalId}/logs`);
-      const data = await res.json();
+      const data = await storage.logs.list(validGoalId);
       setLogs(data);
     } catch (error) {
       console.error('Failed to fetch logs:', error);
     } finally {
       setLoading(false);
     }
-  }
+  }, [validGoalId]);
+
+  useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
 
   async function addLog(log) {
     if (validGoalId === null) return;
-    const res = await fetch(`${API_BASE}/goals/${validGoalId}/logs`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...log,
-        date: log.date || getTodayStr(),
-        createdAt: new Date().toISOString()
-      })
+    const newLog = await storage.logs.create(validGoalId, {
+      ...log,
+      date: log.date || getTodayStr(),
     });
-    const newLog = await res.json();
     setLogs(prev => [newLog, ...prev]);
     return newLog;
   }
 
   async function deleteLog(id) {
-    await fetch(`${API_BASE}/logs/${id}`, { method: 'DELETE' });
+    await storage.logs.delete(id);
     setLogs(prev => prev.filter(l => l.id !== id));
   }
 
