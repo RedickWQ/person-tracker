@@ -1,43 +1,34 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import './ProgressSlider.css';
 
 export function ProgressSlider({ value, onChange }) {
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      updateValue(e);
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-    updateValue(e);
-  };
-
-  const updateValue = (e) => {
+  const updateValue = useCallback((clientX) => {
     if (!sliderRef.current) return;
     const rect = sliderRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    const x = clientX - rect.left;
     const percentage = Math.round((x / rect.width) * 100);
     const clampedValue = Math.min(100, Math.max(0, percentage));
     onChange(clampedValue);
+  }, [onChange]);
+
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+    updateValue(e.clientX);
   };
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging) return;
+    updateValue(e.clientX);
+  }, [isDragging, updateValue]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   return (
     <div className="progress-slider">
@@ -46,6 +37,9 @@ export function ProgressSlider({ value, onChange }) {
         ref={sliderRef}
         className="progress-slider-track"
         onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       >
         <div
           className="progress-slider-fill"
