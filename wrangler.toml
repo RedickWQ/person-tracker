@@ -1,6 +1,5 @@
 name = "person-tracker"
 compatibility_date = "2024-01-01"
-account_id = "46e1e5cbbb675cf9bc2a04283b31c6b7"
 pages_build_output_dir = "dist"
 
 [[d1_databases]]
