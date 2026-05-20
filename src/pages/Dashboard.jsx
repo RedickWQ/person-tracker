@@ -8,7 +8,7 @@ import { ProgressBar } from '../components/Common/ProgressBar';
 import { StatsCards } from '../components/Dashboard/StatsCards';
 import { GlobalHeatmap } from '../components/Dashboard/GlobalHeatmap';
 import { useGoals } from '../hooks/useGoals';
-import { GoalStatus } from '../constants';
+import { GoalStatus, GoalTypeConfig } from '../constants';
 import { Plus, Target, Clock, CheckCircle2, TrendingUp, Calendar } from 'lucide-react';
 import { formatDate, getTodayStr, calculateCurrentStreak, calculateLongestStreak, startOfWeek, startOfMonth } from '../utils/dateUtils';
 import './Dashboard.css';
@@ -194,12 +194,20 @@ export function Dashboard() {
                   onClick={() => navigate(`/goals/${goal.id}`)}
                 >
                   <div className="goal-overview-header">
-                    <span
-                      className="status-badge"
-                      style={{ background: status.color }}
-                    >
-                      {status.label}
-                    </span>
+                    <div className="goal-type-badges">
+                      <span
+                        className="status-badge"
+                        style={{ background: status.color }}
+                      >
+                        {status.label}
+                      </span>
+                      <span
+                        className="goal-type-badge"
+                        style={{ background: GoalTypeConfig[goal.goalType]?.color || '#8B5CF6' }}
+                      >
+                        {GoalTypeConfig[goal.goalType]?.icon} {GoalTypeConfig[goal.goalType]?.label}
+                      </span>
+                    </div>
                     <span className="goal-dates">
                       {goal.startDate || '未设置'} ~ {goal.endDate || '至今'}
                     </span>
