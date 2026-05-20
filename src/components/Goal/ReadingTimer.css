@@ -1,0 +1,95 @@
+.reading-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  border-radius: 16px;
+  border: 1px solid #10B981;
+}
+
+.timer-circle-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 20px;
+}
+
+.timer-circle {
+  transform: scaleX(-1);
+}
+
+.timer-circle-progress {
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.timer-time {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.timer-total {
+  display: block;
+  font-size: 14px;
+  color: #047857;
+  margin-top: 4px;
+}
+
+.timer-controls {
+  margin-bottom: 12px;
+}
+
+.timer-btn-start {
+  background: #10B981 !important;
+  border-color: #10B981 !important;
+}
+
+.timer-btn-start:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+}
+
+.timer-btn-stop {
+  background: #F59E0B !important;
+  border-color: #F59E0B !important;
+  color: white !important;
+}
+
+.timer-btn-stop:hover {
+  background: #D97706 !important;
+  border-color: #D97706 !important;
+}
+
+.timer-status {
+  font-size: 14px;
+  color: #047857;
+}
+
+.status-complete {
+  color: #059669;
+  font-weight: 600;
+}
+
+.status-running {
+  color: #10B981;
+  animation: pulse 1.5s infinite;
+}
+
+.status-ready {
+  color: #6B7280;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

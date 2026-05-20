@@ -485,6 +485,38 @@
   border-color: #D97706;
 }
 
+/* 阅读计时器卡片 */
+.reading-timer-card {
+  margin-bottom: 24px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.reading-time-manual {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+}
+
+.reading-time-manual label {
+  font-size: 14px;
+  color: #64748B;
+  white-space: nowrap;
+}
+
+.reading-time-manual .reading-time-input {
+  max-width: 120px;
+  border-color: #CBD5E1;
+  color: #1E293B;
+}
+
+.reading-time-manual .reading-time-input:focus {
+  border-color: #6366F1;
+}
+
 @media (max-width: 1024px) {
   .overview-stats {
     grid-template-columns: 1fr;

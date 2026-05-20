@@ -7,6 +7,7 @@ import { Button } from '../components/Common/Button';
 import { GoalForm } from '../components/Goal/GoalForm';
 import { MilestoneList } from '../components/Goal/MilestoneList';
 import { ProgressSlider } from '../components/Goal/ProgressSlider';
+import { ReadingTimer } from '../components/Goal/ReadingTimer';
 import { QuoteList } from '../components/Quotes/QuoteList';
 import { useGoals } from '../hooks/useGoals';
 import { useGoal } from '../hooks/useGoal';
@@ -185,31 +186,39 @@ export function GoalDetailPage() {
           </div>
         </Card>
 
-        {/* 完成进度 */}
-        <Card className="goal-progress-card">
-          <ProgressSlider
-            value={localProgress || 0}
-            onChange={handleProgressChange}
-          />
-        </Card>
+        {/* 完成进度 - 非阅读目标显示进度条 */}
+        {goal.goalType !== GoalType.READING && (
+          <Card className="goal-progress-card">
+            <ProgressSlider
+              value={localProgress || 0}
+              onChange={handleProgressChange}
+            />
+          </Card>
+        )}
 
-        {/* 阅读时长追踪器 */}
+        {/* 阅读计时器 */}
         {goal.goalType === GoalType.READING && (
-          <Card className="reading-time-card">
-            <div className="reading-time-header">
-              <h3>📚 阅读时长追踪</h3>
-            </div>
-            <div className="reading-time-stats">
-              <div className="reading-time-info">
-                <span className="reading-time-label">已完成</span>
-                <span className="reading-time-value">{localReadingTime}</span>
-                <span className="reading-time-unit">/ {localTotalReadingTime} 分钟</span>
-              </div>
-              <div className="reading-time-progress">
-                <span className="progress-percent">{localProgress}%</span>
-              </div>
-            </div>
-            <div className="reading-time-edit">
+          <Card className="reading-timer-card">
+            <ReadingTimer
+              totalMinutes={localTotalReadingTime}
+              completedMinutes={localReadingTime}
+              onSave={async (newTotalMinutes) => {
+                const calculatedProgress = Math.min(100, Math.round((newTotalMinutes / localTotalReadingTime) * 100));
+                setLocalReadingTime(newTotalMinutes);
+                setLocalProgress(calculatedProgress);
+                await updateGoal(Number(id), {
+                  readingTime: newTotalMinutes,
+                  progress: calculatedProgress
+                });
+                refetch();
+              }}
+              onComplete={() => {
+                setLocalProgress(100);
+                updateGoal(Number(id), { progress: 100, readingTime: localTotalReadingTime });
+              }}
+            />
+            <div className="reading-time-manual">
+              <label>手动调整阅读时长（分钟）：</label>
               <input
                 type="number"
                 className="reading-time-input"
@@ -217,7 +226,6 @@ export function GoalDetailPage() {
                 onChange={(e) => {
                   const newTime = Number(e.target.value) || 0;
                   setLocalReadingTime(newTime);
-                  // 自动计算进度
                   const calculatedProgress = Math.min(100, Math.round((newTime / localTotalReadingTime) * 100));
                   setLocalProgress(calculatedProgress);
                 }}
@@ -234,7 +242,7 @@ export function GoalDetailPage() {
                   refetch();
                 }}
               >
-                更新
+                保存
               </Button>
             </div>
           </Card>
