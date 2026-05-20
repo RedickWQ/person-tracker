@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages and API
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -23,12 +23,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy API to Cloudflare Workers
-        run: npx wrangler deploy api.js --config api-wrangler.toml
-
-      - name: Deploy Frontend to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=person-tracker --commit-dirty=true
+          command: pages deploy dist --project-name=person-tracker
