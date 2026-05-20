@@ -3,7 +3,7 @@
  * Serves frontend and proxies API requests
  */
 
-const PAGES_URL = 'https://0999db15.person-tracker.pages.dev';
+const PAGES_URL = 'https://ecf3b798.person-tracker.pages.dev';
 const API_URL = 'https://person-tracker-api.p33099894.workers.dev';
 
 export default {
