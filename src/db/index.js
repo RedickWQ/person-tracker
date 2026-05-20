@@ -43,15 +43,11 @@ db.version(5).stores({
   quotes: '++id, content, createdAt'
 });
 
-db.version(6).stores({
-  goals: '++id, title, description, status, progress, startDate, endDate, createdAt, updatedAt',
+db.version(7).stores({
+  goals: '++id, title, description, goalType, status, progress, startDate, endDate, readingTime, totalReadingTime, createdAt, updatedAt',
   milestones: '++id, goalId, title, completed, dueDate, createdAt',
   dailyLogs: '++id, goalId, date, completedItems, output, createdAt',
   quotes: '++id, goalId, content, createdAt'
-}).upgrade(tx => {
-  return tx.quotes.toCollection().modify(quote => {
-    quote.goalId = null;
-  });
 });
 
 export const GoalStatus = {

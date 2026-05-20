@@ -13,7 +13,7 @@ import { useGoal } from '../hooks/useGoal';
 import { useMilestones } from '../hooks/useMilestones';
 import { useDailyLogs } from '../hooks/useDailyLogs';
 import { useQuotes } from '../hooks/useQuotes';
-import { GoalStatus } from '../constants';
+import { GoalStatus, GoalType, GoalTypeConfig } from '../constants';
 import { ArrowLeft, Trash2, Calendar, TrendingUp, CheckCircle2, Sparkles } from 'lucide-react';
 import { formatDate } from '../utils/dateUtils';
 import './GoalDetailPage.css';
@@ -39,14 +39,24 @@ export function GoalDetailPage() {
   const [output, setOutput] = useState('');
   const [logPage, setLogPage] = useState(1);
   const [localProgress, setLocalProgress] = useState(null);
+  const [localReadingTime, setLocalReadingTime] = useState(0);
+  const [localTotalReadingTime, setLocalTotalReadingTime] = useState(600);
   const PAGE_SIZE = 5;
 
   const { quotes, addQuote, deleteQuote, updateQuote } = useQuotes(Number(id));
 
-  // 当 goal 加载完成时，初始化本地进度
+  // 当 goal 加载完成时，初始化本地进度和阅读时长
   useEffect(() => {
     if (goal) {
-      setLocalProgress(goal.progress || 0);
+      setLocalReadingTime(goal.readingTime || 0);
+      setLocalTotalReadingTime(goal.totalReadingTime || 600);
+      // 阅读类型目标：根据阅读时长计算进度
+      if (goal.goalType === GoalType.READING && goal.totalReadingTime) {
+        const calculatedProgress = Math.min(100, Math.round((goal.readingTime / goal.totalReadingTime) * 100));
+        setLocalProgress(calculatedProgress);
+      } else {
+        setLocalProgress(goal.progress || 0);
+      }
     }
   }, [goal]);
 
@@ -134,6 +144,9 @@ export function GoalDetailPage() {
               <span className="status-badge" style={{ background: status.color }}>
                 {status.label}
               </span>
+              <span className="goal-type-badge" style={{ background: GoalTypeConfig[goal.goalType]?.color || '#8B5CF6' }}>
+                {GoalTypeConfig[goal.goalType]?.icon} {GoalTypeConfig[goal.goalType]?.label}
+              </span>
               <h1 className="goal-title">{goal.title}</h1>
               {goal.description && (
                 <p className="goal-desc">{goal.description}</p>
@@ -179,6 +192,53 @@ export function GoalDetailPage() {
             onChange={handleProgressChange}
           />
         </Card>
+
+        {/* 阅读时长追踪器 */}
+        {goal.goalType === GoalType.READING && (
+          <Card className="reading-time-card">
+            <div className="reading-time-header">
+              <h3>📚 阅读时长追踪</h3>
+            </div>
+            <div className="reading-time-stats">
+              <div className="reading-time-info">
+                <span className="reading-time-label">已完成</span>
+                <span className="reading-time-value">{localReadingTime}</span>
+                <span className="reading-time-unit">/ {localTotalReadingTime} 分钟</span>
+              </div>
+              <div className="reading-time-progress">
+                <span className="progress-percent">{localProgress}%</span>
+              </div>
+            </div>
+            <div className="reading-time-edit">
+              <input
+                type="number"
+                className="reading-time-input"
+                value={localReadingTime}
+                onChange={(e) => {
+                  const newTime = Number(e.target.value) || 0;
+                  setLocalReadingTime(newTime);
+                  // 自动计算进度
+                  const calculatedProgress = Math.min(100, Math.round((newTime / localTotalReadingTime) * 100));
+                  setLocalProgress(calculatedProgress);
+                }}
+                min="0"
+              />
+              <Button
+                size="sm"
+                onClick={async () => {
+                  const calculatedProgress = Math.min(100, Math.round((localReadingTime / localTotalReadingTime) * 100));
+                  await updateGoal(Number(id), {
+                    readingTime: localReadingTime,
+                    progress: calculatedProgress
+                  });
+                  refetch();
+                }}
+              >
+                更新
+              </Button>
+            </div>
+          </Card>
+        )}
 
         {/* 激励语录 */}
         <Card className="quotes-card">

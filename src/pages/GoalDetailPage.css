@@ -388,6 +388,103 @@
   color: #6366F1;
 }
 
+/* 目标类型徽章 */
+.goal-type-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+
+/* 阅读时长追踪器 */
+.reading-time-card {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 1px solid #F59E0B;
+  padding: 20px;
+}
+
+.reading-time-header {
+  margin-bottom: 16px;
+}
+
+.reading-time-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #92400E;
+  margin: 0;
+}
+
+.reading-time-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+}
+
+.reading-time-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.reading-time-label {
+  font-size: 14px;
+  color: #92400E;
+  font-weight: 500;
+}
+
+.reading-time-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #78350F;
+}
+
+.reading-time-unit {
+  font-size: 16px;
+  color: #92400E;
+}
+
+.reading-time-progress {
+  text-align: right;
+}
+
+.progress-percent {
+  font-size: 28px;
+  font-weight: 700;
+  color: #D97706;
+}
+
+.reading-time-edit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reading-time-input {
+  flex: 1;
+  max-width: 200px;
+  padding: 10px 14px;
+  border: 2px solid #F59E0B;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #78350F;
+  background: #FFFFFF;
+}
+
+.reading-time-input:focus {
+  outline: none;
+  border-color: #D97706;
+}
+
 @media (max-width: 1024px) {
   .overview-stats {
     grid-template-columns: 1fr;
