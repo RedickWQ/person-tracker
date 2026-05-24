@@ -1,5 +1,5 @@
 .button {
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 10px 20px;
   font-weight: 500;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
