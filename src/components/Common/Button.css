@@ -1,13 +1,17 @@
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: 8px;
+.button {
+  border-radius: 12px;
+  padding: 10px 20px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.button:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.button:active {
+  transform: scale(0.98);
 }
 
 .btn:disabled {
