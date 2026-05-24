@@ -414,11 +414,13 @@
 /* 目标类型徽章 */
 .goal-type-badge {
   display: inline-block;
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #FFFFFF;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(4px);
   margin-bottom: 8px;
   margin-left: 8px;
 }
