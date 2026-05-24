@@ -145,9 +145,6 @@ export function GoalDetailPage() {
               <span className="status-badge" style={{ background: status.color }}>
                 {status.label}
               </span>
-              <span className="goal-type-badge" style={{ background: GoalTypeConfig[goal.goalType]?.color || '#8B5CF6' }}>
-                {GoalTypeConfig[goal.goalType]?.icon} {GoalTypeConfig[goal.goalType]?.label}
-              </span>
               <h1 className="goal-title">{goal.title}</h1>
               {goal.description && (
                 <p className="goal-desc">{goal.description}</p>

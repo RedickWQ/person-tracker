@@ -201,12 +201,6 @@ export function Dashboard() {
                       >
                         {status.label}
                       </span>
-                      <span
-                        className="goal-type-badge"
-                        style={{ background: GoalTypeConfig[goal.goalType]?.color || '#8B5CF6' }}
-                      >
-                        {GoalTypeConfig[goal.goalType]?.icon} {GoalTypeConfig[goal.goalType]?.label}
-                      </span>
                     </div>
                     <span className="goal-dates">
                       {goal.startDate || '未设置'} ~ {goal.endDate || '至今'}
