@@ -19,23 +19,32 @@
 
 .overview-card {
   background: #FFFFFF;
-  border-radius: 16px;
-  padding: 20px 24px;
+  border-radius: 20px;
+  padding: 24px;
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.overview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .overview-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #F1F5F9;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748B;
+  transition: transform var(--transition-normal);
+}
+
+.overview-card:hover .overview-icon {
+  transform: scale(1.05);
 }
 
 .overview-card.active .overview-icon {
@@ -107,31 +116,30 @@
 /* 目标卡片颜色变体 */
 .goal-overview-card {
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  border-radius: 20px;
+  padding: 24px;
 }
 
-.goal-overview-card.variant-indigo {
-  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+.goal-overview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
-.goal-overview-card.variant-green {
-  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+.goal-overview-card.variant-side-business {
+  background: var(--gradient-side-business);
 }
 
-.goal-overview-card.variant-amber {
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+.goal-overview-card.variant-thinking {
+  background: var(--gradient-thinking);
 }
 
-.goal-overview-card.variant-pink {
-  background: linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%);
+.goal-overview-card.variant-exercise {
+  background: var(--gradient-exercise);
 }
 
-.goal-overview-card.variant-sky {
-  background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
-}
-
-.goal-overview-card.variant-purple {
-  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%);
+.goal-overview-card.variant-reading {
+  background: var(--gradient-reading);
 }
 
 .goal-overview-card:hover {
@@ -191,29 +199,23 @@
   gap: 6px;
 }
 
-.status-badge {
+.status-badge, .goal-type-badge {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
   color: #FFFFFF;
-  text-transform: uppercase;
   letter-spacing: 0.3px;
-}
-
-.goal-type-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #FFFFFF;
+  backdrop-filter: blur(4px);
 }
 
 .goal-dates {
   font-size: 12px;
-  color: #94A3B8;
+  color: #64748B;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 4px 8px;
+  border-radius: 8px;
 }
 
 .goal-overview-title {
@@ -221,6 +223,7 @@
   font-weight: 600;
   color: #1E293B;
   margin: 0 0 16px 0;
+  line-height: 1.4;
 }
 
 .goal-overview-stats {
