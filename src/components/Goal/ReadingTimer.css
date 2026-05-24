@@ -50,23 +50,19 @@
 
 .timer-btn-start {
   background: #10B981 !important;
-  border-color: #10B981 !important;
 }
 
 .timer-btn-start:hover {
   background: #059669 !important;
-  border-color: #059669 !important;
 }
 
 .timer-btn-stop {
   background: #F59E0B !important;
-  border-color: #F59E0B !important;
   color: white !important;
 }
 
 .timer-btn-stop:hover {
   background: #D97706 !important;
-  border-color: #D97706 !important;
 }
 
 .timer-status {

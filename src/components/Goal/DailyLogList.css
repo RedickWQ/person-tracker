@@ -45,28 +45,30 @@
 
 .daily-log-input {
   padding: 8px 12px;
-  border: 1px solid #E2E8F0;
+  border: none;
   border-radius: 6px;
   font-size: 14px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .daily-log-input:focus {
   outline: none;
-  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .daily-log-textarea {
   padding: 10px 12px;
-  border: 1px solid #E2E8F0;
+  border: none;
   border-radius: 6px;
   font-size: 14px;
   resize: vertical;
   font-family: inherit;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .daily-log-textarea:focus {
   outline: none;
-  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .daily-log-add-actions {

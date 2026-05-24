@@ -185,7 +185,7 @@
 .log-form-field textarea:focus,
 .log-form-field input:focus {
   outline: none;
-  border-bottom: 2px solid var(--color-side-business);
+  box-shadow: 0 2px 0 0 var(--color-side-business);
 }
 
 .log-form-actions {
@@ -512,7 +512,7 @@
 
 .reading-time-input:focus {
   outline: none;
-  border-color: #D97706;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
 }
 
 /* 阅读计时器卡片 */
@@ -539,12 +539,11 @@
 
 .reading-time-manual .reading-time-input {
   max-width: 120px;
-  border-color: #CBD5E1;
   color: #1E293B;
 }
 
 .reading-time-manual .reading-time-input:focus {
-  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 @media (max-width: 1024px) {
