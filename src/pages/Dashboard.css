@@ -172,7 +172,6 @@
 .goal-overview-card.variant-pink .goal-overview-footer,
 .goal-overview-card.variant-sky .goal-overview-footer,
 .goal-overview-card.variant-purple .goal-overview-footer {
-  border-top-color: rgba(0, 0, 0, 0.08);
   color: #64748B;
 }
 
