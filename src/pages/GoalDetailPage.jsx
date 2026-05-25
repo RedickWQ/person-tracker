@@ -14,6 +14,7 @@ import { useGoal } from '../hooks/useGoal';
 import { useMilestones } from '../hooks/useMilestones';
 import { useDailyLogs } from '../hooks/useDailyLogs';
 import { useQuotes } from '../hooks/useQuotes';
+import { storage } from '../storage';
 import { GoalStatus, GoalType, GoalTypeConfig } from '../constants';
 import { ArrowLeft, Trash2, Calendar, TrendingUp, CheckCircle2, Sparkles } from 'lucide-react';
 import { formatDate } from '../utils/dateUtils';
@@ -68,16 +69,21 @@ export function GoalDetailPage() {
     }
   };
 
-  const handleAddLog = () => {
+  const handleAddLog = async () => {
     if (!completedItems.trim()) return;
-    addLog({
+    await addLog({
       completedItems: completedItems.trim(),
       output: output.trim()
     });
+    // 手动刷新日志列表
+    const newLogs = await storage.logs.list(Number(id));
+    // 强制组件重新渲染
+    setLogPage(1);
+    setShowLogForm(false);
     setCompletedItems('');
     setOutput('');
-    setShowLogForm(false);
-    setLogPage(1);
+    // 使用 location.reload() 确保数据刷新
+    window.location.reload();
   };
 
   const handleProgressChange = (newProgress) => {
@@ -311,7 +317,10 @@ export function GoalDetailPage() {
                           <span className="log-value markdown-content"><ReactMarkdown>{log.completedItems}</ReactMarkdown></span>
                         </div>
                       </div>
-                      <button className="log-delete" onClick={() => deleteLog(log.id)}>
+                      <button className="log-delete" onClick={async () => {
+                        await deleteLog(log.id);
+                        window.location.reload();
+                      }}>
                         删除
                       </button>
                     </div>
