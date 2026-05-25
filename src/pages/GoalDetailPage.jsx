@@ -30,7 +30,7 @@ export function GoalDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { updateGoal, deleteGoal } = useGoals();
-  const { goal, loading, error, refetch } = useGoal(id);
+  const { goal, loading } = useGoal(id);
   const { milestones, addMilestone, toggleMilestone, deleteMilestone } = useMilestones(Number(id));
   const { logs, addLog, deleteLog } = useDailyLogs(Number(id));
 
@@ -207,7 +207,6 @@ export function GoalDetailPage() {
                   readingTime: newTotalMinutes,
                   progress: calculatedProgress
                 });
-                refetch();
               }}
               onComplete={() => {
                 setLocalProgress(100);
@@ -236,7 +235,6 @@ export function GoalDetailPage() {
                     readingTime: localReadingTime,
                     progress: calculatedProgress
                   });
-                  refetch();
                 }}
               >
                 保存
@@ -365,7 +363,6 @@ export function GoalDetailPage() {
           onClose={() => setShowEditForm(false)}
           onSubmit={async (updates) => {
             await updateGoal(Number(id), updates);
-            refetch();
             setShowEditForm(false);
           }}
           initialData={goal}

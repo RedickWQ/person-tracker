@@ -1,40 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { storage } from '../storage';
 
 export function useGoal(id) {
-  const [goal, setGoal] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const goalId = id !== null && id !== undefined ? Number(id) : null;
+  const isValidId = !isNaN(goalId) && goalId !== null;
 
-  const fetchGoal = useCallback(async () => {
-    if (id === null || id === undefined) {
-      setGoal(null);
-      setLoading(false);
-      return;
-    }
+  const goal = useLiveQuery(
+    async () => {
+      if (!isValidId) return null;
+      return storage.goals.get(goalId);
+    },
+    [goalId],
+    null
+  );
 
-    const goalId = Number(id);
-    if (isNaN(goalId)) {
-      setGoal(null);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const data = await storage.goals.get(goalId);
-      setGoal(data);
-    } catch (err) {
-      setError(err.message);
-      setGoal(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    fetchGoal();
-  }, [fetchGoal]);
-
-  return { goal, loading, error, refetch: fetchGoal };
+  return { goal, loading: false, error: null };
 }
