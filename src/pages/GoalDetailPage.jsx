@@ -14,7 +14,6 @@ import { useGoal } from '../hooks/useGoal';
 import { useMilestones } from '../hooks/useMilestones';
 import { useDailyLogs } from '../hooks/useDailyLogs';
 import { useQuotes } from '../hooks/useQuotes';
-import { storage } from '../storage';
 import { GoalStatus, GoalType, GoalTypeConfig } from '../constants';
 import { ArrowLeft, Trash2, Calendar, TrendingUp, CheckCircle2, Sparkles } from 'lucide-react';
 import { formatDate } from '../utils/dateUtils';
@@ -75,15 +74,10 @@ export function GoalDetailPage() {
       completedItems: completedItems.trim(),
       output: output.trim()
     });
-    // 手动刷新日志列表
-    const newLogs = await storage.logs.list(Number(id));
-    // 强制组件重新渲染
-    setLogPage(1);
-    setShowLogForm(false);
     setCompletedItems('');
     setOutput('');
-    // 使用 location.reload() 确保数据刷新
-    window.location.reload();
+    setShowLogForm(false);
+    setLogPage(1);
   };
 
   const handleProgressChange = (newProgress) => {
@@ -319,7 +313,6 @@ export function GoalDetailPage() {
                       </div>
                       <button className="log-delete" onClick={async () => {
                         await deleteLog(log.id);
-                        window.location.reload();
                       }}>
                         删除
                       </button>

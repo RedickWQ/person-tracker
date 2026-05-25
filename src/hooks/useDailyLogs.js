@@ -57,7 +57,7 @@ export function useDailyLogs(goalId) {
 
   useEffect(() => {
     fetchLogs();
-  }, [validGoalId, fetchLogs]);
+  }, [validGoalId]);
 
   async function addLog(log) {
     if (validGoalId === null) return;
