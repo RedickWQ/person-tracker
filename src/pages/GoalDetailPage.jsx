@@ -30,7 +30,7 @@ export function GoalDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { updateGoal, deleteGoal } = useGoals();
-  const { goal } = useGoal(id);
+  const { goal, loading: goalLoading, error } = useGoal(id);
   const { milestones, addMilestone, toggleMilestone, deleteMilestone } = useMilestones(Number(id));
   const { logs, addLog, deleteLog } = useDailyLogs(Number(id));
 
@@ -92,8 +92,20 @@ export function GoalDetailPage() {
   const totalPages = Math.ceil(sortedLogs.length / PAGE_SIZE);
   const paginatedLogs = sortedLogs.slice((logPage - 1) * PAGE_SIZE, logPage * PAGE_SIZE);
 
+  // 显示加载状态或错误
+  if (goalLoading) {
+    return (
+      <div className="page">
+        <Header title="目标详情" />
+        <div className="page-content">
+          <p>加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
   // 如果目标不存在，显示提示
-  if (!goal) {
+  if (error || !goal) {
     return (
       <div className="page">
         <Header title="目标详情" />
