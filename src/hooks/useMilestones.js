@@ -53,22 +53,29 @@ export function useMilestones(goalId) {
 
   useEffect(() => {
     fetchMilestones();
-  }, [fetchMilestones]);
+  }, [validGoalId, fetchMilestones]);
 
   async function addMilestone(data) {
     if (validGoalId === null) return;
     await storage.milestones.create(validGoalId, data);
-    await fetchMilestones();
+    const d = await storage.milestones.list(validGoalId);
+    setMilestones(d);
   }
 
   async function toggleMilestone(id, completed) {
     await storage.milestones.update(id, { completed });
-    await fetchMilestones();
+    if (validGoalId !== null) {
+      const d = await storage.milestones.list(validGoalId);
+      setMilestones(d);
+    }
   }
 
   async function deleteMilestone(id) {
     await storage.milestones.delete(id);
-    await fetchMilestones();
+    if (validGoalId !== null) {
+      const d = await storage.milestones.list(validGoalId);
+      setMilestones(d);
+    }
   }
 
   return { milestones, loading, addMilestone, toggleMilestone, deleteMilestone };

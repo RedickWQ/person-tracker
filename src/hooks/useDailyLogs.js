@@ -57,7 +57,7 @@ export function useDailyLogs(goalId) {
 
   useEffect(() => {
     fetchLogs();
-  }, [fetchLogs]);
+  }, [validGoalId, fetchLogs]);
 
   async function addLog(log) {
     if (validGoalId === null) return;
@@ -65,12 +65,18 @@ export function useDailyLogs(goalId) {
       ...log,
       date: log.date || getTodayStr(),
     });
-    await fetchLogs(); // Refetch after mutation
+    // Refetch after mutation
+    const data = await storage.logs.list(validGoalId);
+    setLogs(data);
   }
 
   async function deleteLog(id) {
     await storage.logs.delete(id);
-    await fetchLogs(); // Refetch after mutation
+    // Refetch after mutation
+    if (validGoalId !== null) {
+      const data = await storage.logs.list(validGoalId);
+      setLogs(data);
+    }
   }
 
   return { logs, loading, addLog, deleteLog };

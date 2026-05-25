@@ -27,7 +27,7 @@ export function useQuotes(goalId) {
 
     async function updateQuote(id, content) {
       if (!content.trim()) return;
-      await deleteQuote(id);
+      await storage.quotes.delete(id);
       await addQuote(content);
     }
 
@@ -56,18 +56,22 @@ export function useQuotes(goalId) {
 
   useEffect(() => {
     fetchQuotes();
-  }, [fetchQuotes]);
+  }, [validGoalId, fetchQuotes]);
 
   async function addQuote(content) {
     if (validGoalId === null) return;
     if (!content.trim()) return;
     await storage.quotes.create(validGoalId, { content: content.trim() });
-    await fetchQuotes();
+    const data = await storage.quotes.list(validGoalId);
+    setQuotes(data);
   }
 
   async function deleteQuote(id) {
     await storage.quotes.delete(id);
-    await fetchQuotes();
+    if (validGoalId !== null) {
+      const data = await storage.quotes.list(validGoalId);
+      setQuotes(data);
+    }
   }
 
   async function updateQuote(id, content) {

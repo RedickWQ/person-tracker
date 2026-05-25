@@ -34,6 +34,7 @@ export function useGoal(id) {
     try {
       const data = await storage.goals.get(goalId);
       setGoal(data);
+      setError(null);
     } catch (err) {
       setError(err.message);
     } finally {

@@ -45,20 +45,21 @@ export function useGoals() {
   }, [fetchGoals]);
 
   async function addGoal(goal) {
-    const result = await storage.goals.create(goal);
-    await fetchGoals();
-    return result;
+    await storage.goals.create(goal);
+    const data = await storage.goals.list();
+    setGoals(data);
   }
 
   async function updateGoal(id, updates) {
-    const result = await storage.goals.update(id, updates);
-    await fetchGoals();
-    return result;
+    await storage.goals.update(id, updates);
+    const data = await storage.goals.list();
+    setGoals(data);
   }
 
   async function deleteGoal(id) {
     await storage.goals.delete(id);
-    await fetchGoals();
+    const data = await storage.goals.list();
+    setGoals(data);
   }
 
   return { goals, loading, addGoal, updateGoal, deleteGoal };
