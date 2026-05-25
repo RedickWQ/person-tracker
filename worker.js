@@ -1,7 +1,9 @@
 /**
  * Person Tracker Worker
- * Serves frontend and API from D1
+ * Serves frontend from Pages and proxies API to D1
  */
+
+const PAGES_URL = 'https://person-tracker.pages.dev';
 
 export default {
   async fetch(request, env) {
@@ -25,14 +27,17 @@ export default {
       return handleApiRequest(request, env);
     }
 
-    // Serve static files from Workers Assets
-    try {
-      return await env.ASSETS.fetch(request);
-    } catch (e) {
-      // Fallback to index.html for SPA routing
-      const indexRequest = new Request(`${url.origin}/index.html`, request);
-      return await env.ASSETS.fetch(indexRequest);
+    // Serve static files from Pages
+    const pagesUrl = `${PAGES_URL}${path === '/' ? '/index.html' : path}`;
+    const response = await fetch(pagesUrl);
+
+    if (response.ok) {
+      return response;
     }
+
+    // Fallback to index.html for SPA routing
+    const indexResponse = await fetch(`${PAGES_URL}/index.html`);
+    return indexResponse;
   },
 };
 

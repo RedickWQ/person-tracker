@@ -23,7 +23,18 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Cloudflare
+      - name: Deploy to Cloudflare Pages
+        run: |
+          echo "=== Deploying to Cloudflare Pages ==="
+          npx wrangler pages deploy dist --project-name=person-tracker --branch=main 2>&1
+          echo ""
+          echo "=== Getting deployment URL ==="
+          DEPLOY_URL=$(npx wrangler pages deployment list --project-name=person-tracker --json 2>/dev/null | grep -o '"url":"[^"]*"' | head -1 | sed 's/"url":"//;s/"$//')
+          echo "Deployment URL: $DEPLOY_URL"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Deploy API Worker
         run: npx wrangler deploy worker.js --config wrangler.toml --domains formattext2.com
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

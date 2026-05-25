@@ -4,8 +4,6 @@ compatibility_date = "2024-01-01"
 account_id = "46e1e5cbbb675cf9bc2a04283b31c6b7"
 workers_dev = false
 
-assets = { directory = "./dist" }
-
 [[d1_databases]]
 binding = "DB"
 database_name = "person-tracker-db"
