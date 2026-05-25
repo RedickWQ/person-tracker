@@ -29,6 +29,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy dist --project-name=person-tracker --branch=production
+        run: |
+          echo "Deploying dist folder to Cloudflare Pages..."
+          echo "Files to deploy:"
+          ls -la dist/
+          npx wrangler pages deploy dist --project-name=person-tracker --branch=production
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
