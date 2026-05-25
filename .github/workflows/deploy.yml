@@ -30,16 +30,24 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         run: |
-          echo "=== Deploying to Cloudflare Pages ==="
-          echo "Listing existing Pages projects..."
-          npx wrangler pages project list 2>/dev/null || echo "No existing projects"
+          echo "=== Cloudflare Pages Deployment ==="
+
+          # Check if project exists
+          echo "Checking for existing Pages projects..."
+          npx wrangler pages project list 2>&1 || true
+
+          # Create project if needed (ignore errors if it exists)
           echo ""
-          echo "Creating or updating Pages project..."
-          npx wrangler pages project create person-tracker --production-branch=production 2>&1 || echo "Project may already exist"
+          echo "Ensuring person-tracker project exists..."
+          npx wrangler pages project create person-tracker --production-branch=main 2>&1 || true
+
+          # Deploy to production branch (main)
           echo ""
-          echo "Deploying to Pages..."
-          npx wrangler pages deploy dist --project-name=person-tracker --branch=production 2>&1
+          echo "Deploying to production (main branch)..."
+          npx wrangler pages deploy dist --project-name=person-tracker --branch=main 2>&1
+
           echo ""
           echo "=== Deployment Complete ==="
+          echo "Check Cloudflare Dashboard for deployment status"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
